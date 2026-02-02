@@ -14,7 +14,7 @@ export async function GET(req: Request) {
             orderBy: { createdAt: "desc" },
         });
 
-        const parsedLogs = logs.map((log) => ({
+        const parsedLogs = logs.map((log: any) => ({
             ...log,
             aiResult: log.aiResult ? JSON.parse(log.aiResult) : null,
             answers: JSON.parse(log.answers),

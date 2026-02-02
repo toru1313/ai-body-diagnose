@@ -32,7 +32,7 @@ export async function GET(req: Request) {
             result.isUnlocked = true;
         }
 
-        const aiResult = result.aiResult ? JSON.parse(result.aiResult) : null;
+        const aiResult = (result as any).aiResult ? JSON.parse((result as any).aiResult) : null;
 
         if (!result.isUnlocked) {
             // If locked, only return basic and metadata
