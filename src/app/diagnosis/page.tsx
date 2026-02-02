@@ -77,7 +77,7 @@ export default function DiagnosisPage() {
                     field: step.field
                 } : m)
             );
-        }, 1200);
+        }, 500); // 500ms delay fixed
     };
 
     const handleSelect = async (field: string, value: string) => {

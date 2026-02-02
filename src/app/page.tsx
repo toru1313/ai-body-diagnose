@@ -3,12 +3,12 @@ import { ArrowRight, Sparkles, Youtube, MessageCircle, Heart, Brain, Star } from
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[90vh] p-6 max-w-4xl mx-auto text-center space-y-16 py-12">
+    <div className="flex flex-col items-center justify-center min-h-[90vh] p-6 max-w-4xl mx-auto text-center space-y-16 py-12 pb-safe">
       {/* Decorative background element */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-96 bg-pink-500/5 blur-[120px] rounded-full -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-96 bg-pink-400/5 blur-[120px] rounded-full -z-10" />
 
-      <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass border-white/60 text-pink-600 text-xs font-black tracking-widest uppercase shadow-sm">
+      <div className="space-y-6 fade-in">
+        <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass border-white/60 text-pink-500 text-[10px] font-black tracking-widest uppercase shadow-sm">
           <Sparkles className="w-4 h-4" />
           <span>Next-Gen AI Diagnosis</span>
         </div>

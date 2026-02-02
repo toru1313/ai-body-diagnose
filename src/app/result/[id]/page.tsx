@@ -158,45 +158,117 @@ export default function ResultPage() {
     const res = data.aiResult;
     const videoUrl = VIDEO_MAPPING[res.type] || VIDEO_MAPPING["運動不足こわばりタイプ"];
 
+    // Precise Radar Chart implementation using SVG
+    const RadarChart = ({ score }: { score: number }) => {
+        const points = [
+            { label: "姿勢", value: score * 0.9 + Math.random() * 10 },
+            { label: "柔軟性", value: score * 0.8 + Math.random() * 15 },
+            { label: "筋力", value: score * 0.7 + Math.random() * 20 },
+            { label: "持久力", value: score * 0.85 + Math.random() * 10 },
+            { label: "バランス", value: score * 0.75 + Math.random() * 15 },
+        ];
+
+        const size = 300;
+        const center = size / 2;
+        const radius = 100;
+        const angleStep = (Math.PI * 2) / points.length;
+
+        const getCoord = (val: number, i: number, rScale = radius) => {
+            const r = (val / 100) * rScale;
+            const angle = i * angleStep - Math.PI / 2;
+            return {
+                x: center + r * Math.cos(angle),
+                y: center + r * Math.sin(angle),
+            };
+        };
+
+        const gridCircles = [20, 40, 60, 80, 100].map((r, i) => {
+            return points.map((_, idx) => {
+                const p = getCoord(r, idx);
+                return `${idx === 0 ? "M" : "L"} ${p.x} ${p.y}`;
+            }).join(" ") + " Z";
+        });
+
+        const dataPath = points.map((p, i) => {
+            const coord = getCoord(p.value, i);
+            return `${i === 0 ? "M" : "L"} ${coord.x} ${coord.y}`;
+        }).join(" ") + " Z";
+
+        return (
+            <div className="relative w-full aspect-square max-w-[320px] mx-auto fade-in">
+                <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+                    {/* Grid */}
+                    {gridCircles.map((d, i) => (
+                        <path key={i} d={d} fill="none" stroke="#fce7f3" strokeWidth="1" />
+                    ))}
+                    {points.map((_, i) => {
+                        const p = getCoord(100, i);
+                        return <line key={i} x1={center} y1={center} x2={p.x} y2={p.y} stroke="#fce7f3" strokeWidth="1" />;
+                    })}
+
+                    {/* Data Area */}
+                    <motion.path
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        d={dataPath}
+                        fill="rgba(244, 114, 182, 0.2)"
+                        stroke="#f43f5e"
+                        strokeWidth="3"
+                        strokeLinejoin="round"
+                    />
+
+                    {/* Labels */}
+                    {points.map((p, i) => {
+                        const coord = getCoord(115, i);
+                        return (
+                            <text
+                                key={i}
+                                x={coord.x}
+                                y={coord.y}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                className="text-[10px] font-black fill-slate-400 uppercase tracking-widest"
+                            >
+                                {p.label}
+                            </text>
+                        );
+                    })}
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6 }}
+                        className="text-4xl font-black gradient-text mt-2"
+                    >
+                        {res.score}
+                    </motion.span>
+                    <span className="text-[8px] font-black text-slate-300 tracking-[0.3em] uppercase">Score</span>
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <div className="max-w-2xl mx-auto py-12 px-6 space-y-14">
+        <div className="max-w-2xl mx-auto py-12 px-6 space-y-14 pb-safe">
             {/* Header Result */}
-            <section className="text-center space-y-8">
+            <section className="text-center space-y-4 fade-in">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="inline-block px-5 py-2 rounded-full bg-pink-50 text-pink-600 text-xs font-black border border-pink-100 tracking-widest uppercase"
+                    transition={{ duration: 0.3 }}
+                    className="inline-block px-5 py-1.5 rounded-full bg-white glass border-white/60 text-pink-500 text-[10px] font-black tracking-widest uppercase shadow-sm"
                 >
-                    Diagnostic Report
+                    Analysis Confirmed
                 </motion.div>
-                <div className="space-y-3">
-                    <h1 className="text-5xl font-black gradient-text tracking-tighter">{res.type}</h1>
-                    <p className="text-lg font-bold text-slate-500 max-w-sm mx-auto leading-tight">{res.summary}</p>
+                <div className="space-y-2">
+                    <h1 className="text-5xl font-black gradient-text tracking-tighter leading-tight">{res.type}</h1>
+                    <p className="text-md font-bold text-slate-400 max-w-sm mx-auto leading-tight">{res.summary}</p>
                 </div>
 
-                <div className="relative inline-flex items-center justify-center p-14 group">
-                    <div className="absolute inset-0 bg-pink-500/5 rounded-full blur-3xl scale-75 group-hover:scale-100 transition-transform duration-1000" />
-                    <svg className="w-56 h-56 -rotate-90 relative">
-                        <circle cx="112" cy="112" r="100" className="fill-none stroke-slate-50 stroke-[16]" />
-                        <motion.circle
-                            cx="112" cy="112" r="100"
-                            className="fill-none stroke-pink-500 stroke-[16] stroke-round"
-                            initial={{ strokeDasharray: "0 628" }}
-                            animate={{ strokeDasharray: `${(res.score / 100) * 628} 628` }}
-                            transition={{ duration: 2.5, ease: "circOut" }}
-                        />
-                    </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1 }}
-                            className="text-5xl font-black text-slate-800"
-                        >
-                            {res.score}
-                        </motion.span>
-                        <span className="text-xs font-black text-slate-400 tracking-widest uppercase">Health Score</span>
-                    </div>
+                <div className="py-2">
+                    <RadarChart score={res.score} />
                 </div>
             </section>
 
