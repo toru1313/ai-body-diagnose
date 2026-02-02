@@ -20,7 +20,7 @@ export default function AdminPage() {
             } else {
                 alert("パスワードが違います");
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
         } finally {
             setLoading(false);

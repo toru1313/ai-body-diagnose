@@ -93,7 +93,7 @@ export default function DiagnosisPage() {
             if (data.id) {
                 router.push(`/result/${data.id}`);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Submit Error:", error);
             setIsSubmitting(false);
         }

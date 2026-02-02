@@ -38,7 +38,7 @@ export default function ResultPage() {
             const json = await resp.json();
             setData(json);
             setIsUnlocked(json.isUnlocked);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
         } finally {
             setLoading(false);
@@ -58,7 +58,7 @@ export default function ResultPage() {
                 body: JSON.stringify({ id }),
             });
             fetchResult();
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
         }
     };
