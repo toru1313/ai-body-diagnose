@@ -21,7 +21,7 @@ export async function GET(req: Request) {
         }));
 
         return NextResponse.json(parsedLogs);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Admin Logs Error:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
