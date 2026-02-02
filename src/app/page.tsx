@@ -1,65 +1,56 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Sparkles, Youtube, MessageCircle } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col items-center justify-center min-height-screen p-6 max-w-2xl mx-auto text-center space-y-12 py-20">
+      <div className="space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/50 text-pink-600 text-sm font-medium border border-pink-200">
+          <Sparkles className="w-4 h-4" />
+          <span>AIが導き出す、あなたの理想の身体</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <h1 className="text-5xl font-extrabold tracking-tight">
+          AI<span className="gradient-text">不調タイプ診断</span>
+        </h1>
+        <p className="text-xl text-slate-600 leading-relaxed font-medium">
+          たった1分の質問で、あなたの不調を徹底分析。<br />
+          あなた専用のピラティスレッスンをお届けします。
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <div className="glass-card rounded-3xl p-6 text-left space-y-2 border-pink-100">
+          <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-500 mb-2">
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <h3 className="font-bold text-lg">AIによる精密診断</h3>
+          <p className="text-slate-500 text-sm">6つのタイプから分析し、不調の原因と解決策を特定します。</p>
         </div>
-      </main>
+        <div className="glass-card rounded-3xl p-6 text-left space-y-2 border-indigo-100">
+          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-2">
+            <Youtube className="w-6 h-6" />
+          </div>
+          <h3 className="font-bold text-lg">専用動画レッスン</h3>
+          <p className="text-slate-500 text-sm">診断結果に合わせて、今すぐ自宅でできるピラティス動画を無料プレゼント。</p>
+        </div>
+      </div>
+
+      <Link
+        href="/diagnosis"
+        className="group relative inline-flex items-center gap-3 px-12 py-6 rounded-full btn-primary text-xl font-bold overflow-hidden"
+      >
+        <span>今すぐ診断を始める</span>
+        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+      </Link>
+
+      <div className="text-slate-400 text-sm flex items-center justify-center gap-4">
+        <div className="flex items-center gap-1">
+          <MessageCircle className="w-4 h-4" />
+          <span>LINE公式アカウント提携</span>
+        </div>
+        <span>•</span>
+        <span>診断料 0円 (無料)</span>
+      </div>
     </div>
   );
 }

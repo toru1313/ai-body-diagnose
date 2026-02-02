@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model DiagnosisResult {
+  id            String    @id @default(cuid())
+  sex           String
+  ageRange      String
+  answers       String    // JSON string for raw answers
+  aiResult      String?   // JSON string for OpenAI response
+  isUnlocked    Boolean   @default(false)
+  unlockedAt    DateTime?
+  unlockToken   String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
