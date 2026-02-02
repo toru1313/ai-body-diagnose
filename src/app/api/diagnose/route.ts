@@ -4,20 +4,20 @@ import OpenAI from "openai";
 import { nanoid } from "nanoid";
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function POST(req: Request) {
-    try {
-        const body = await req.json();
-        const { sex, ageRange, answers } = body;
+  try {
+    const body = await req.json();
+    const { sex, ageRange, answers } = body;
 
-        if (!sex || !ageRange || !answers) {
-            return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-        }
+    if (!sex || !ageRange || !answers) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
 
-        // AI Prompt Construction
-        const prompt = `
+    // AI Prompt Construction
+    const prompt = `
 あなたは熟練のピラティスインストラクター兼セラピストです。
 以下のユーザー情報と回答に基づき、不調タイプを診断し、JSON形式で回答してください。
 
@@ -64,29 +64,29 @@ export async function POST(req: Request) {
 }
 `;
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: [{ role: "system", content: "あなたは不調タイプ診断AIです。JSON形式で出力します。" }, { role: "user", content: prompt }],
-            response_format: { type: "json_object" },
-        });
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "system", content: "あなたは不調タイプ診断AIです。JSON形式で出力します。" }, { role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
 
-        const aiResultString = completion.choices[0].message.content;
-        const unlockToken = nanoid(32);
+    const aiResultString = completion.choices[0].message.content;
+    const unlockToken = nanoid(32);
 
-        const result = await prisma.diagnosisResult.create({
-            data: {
-                sex,
-                ageRange,
-                answers: JSON.stringify(answers),
-                aiResult: aiResultString,
-                unlockToken,
-                isUnlocked: false,
-            },
-        });
+    const result = await prisma.diagnosisResult.create({
+      data: {
+        sex,
+        ageRange,
+        answers: JSON.stringify(answers),
+        aiResult: aiResultString,
+        unlockToken,
+        isUnlocked: false,
+      },
+    });
 
-        return NextResponse.json({ id: result.id });
-    } catch (error: any) {
-        console.error("Diagnosis Error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-    }
+    return NextResponse.json({ id: result.id });
+  } catch (error: any) {
+    console.error("Diagnosis Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }

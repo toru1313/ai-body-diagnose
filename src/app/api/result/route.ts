@@ -59,7 +59,7 @@ export async function GET(req: Request) {
             aiResult,
             answers: JSON.parse(result.answers),
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Fetch Result Error:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
