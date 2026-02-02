@@ -1,55 +1,69 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles, Youtube, MessageCircle } from "lucide-react";
+import { ArrowRight, Sparkles, Youtube, MessageCircle, Heart, Brain, Star } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-height-screen p-6 max-w-2xl mx-auto text-center space-y-12 py-20">
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/50 text-pink-600 text-sm font-medium border border-pink-200">
+    <div className="flex flex-col items-center justify-center min-h-[90vh] p-6 max-w-4xl mx-auto text-center space-y-16 py-12">
+      {/* Decorative background element */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-96 bg-pink-500/5 blur-[120px] rounded-full -z-10" />
+
+      <div className="space-y-6">
+        <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass border-white/60 text-pink-600 text-xs font-black tracking-widest uppercase shadow-sm">
           <Sparkles className="w-4 h-4" />
-          <span>AIが導き出す、あなたの理想の身体</span>
+          <span>Next-Gen AI Diagnosis</span>
         </div>
-        <h1 className="text-5xl font-extrabold tracking-tight">
-          AI<span className="gradient-text">不調タイプ診断</span>
-        </h1>
-        <p className="text-xl text-slate-600 leading-relaxed font-medium">
-          たった1分の質問で、あなたの不調を徹底分析。<br />
-          あなた専用のピラティスレッスンをお届けします。
+
+        <div className="space-y-2">
+          <h1 className="text-6xl md:text-7xl font-black tracking-tighter leading-[0.9]">
+            AIで導く<br />
+            <span className="gradient-text">理想の身体。</span>
+          </h1>
+        </div>
+
+        <p className="text-lg md:text-xl text-slate-500 leading-relaxed font-bold max-w-xl mx-auto">
+          科学的なデータとAI分析により、<br />
+          あなたの不調の根本原因を特定し、<br />
+          最適な改善プログラムを無料で提案します。
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-        <div className="glass-card rounded-3xl p-6 text-left space-y-2 border-pink-100">
-          <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-500 mb-2">
-            <Sparkles className="w-6 h-6" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
+        {[
+          { icon: Brain, title: "精密AI分析", desc: "6つの不調タイプ" },
+          { icon: Youtube, title: "専用動画", desc: "完全無料プログラム" },
+          { icon: Heart, title: "持続可能", desc: "自宅で1分から" },
+        ].map((item, i) => (
+          <div key={i} className="glass-card rounded-[32px] p-8 text-center space-y-3 border-white/80 group hover:-translate-y-1 transition-all">
+            <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center mx-auto shadow-sm group-hover:shadow-pink-100 transition-all">
+              <item.icon className="w-6 h-6 text-pink-500" />
+            </div>
+            <h3 className="font-black text-slate-800 text-sm">{item.title}</h3>
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{item.desc}</p>
           </div>
-          <h3 className="font-bold text-lg">AIによる精密診断</h3>
-          <p className="text-slate-500 text-sm">6つのタイプから分析し、不調の原因と解決策を特定します。</p>
-        </div>
-        <div className="glass-card rounded-3xl p-6 text-left space-y-2 border-indigo-100">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-2">
-            <Youtube className="w-6 h-6" />
-          </div>
-          <h3 className="font-bold text-lg">専用動画レッスン</h3>
-          <p className="text-slate-500 text-sm">診断結果に合わせて、今すぐ自宅でできるピラティス動画を無料プレゼント。</p>
-        </div>
+        ))}
       </div>
 
-      <Link
-        href="/diagnosis"
-        className="group relative inline-flex items-center gap-3 px-12 py-6 rounded-full btn-primary text-xl font-bold overflow-hidden"
-      >
-        <span>今すぐ診断を始める</span>
-        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-      </Link>
+      <div className="space-y-8 w-full">
+        <Link
+          href="/diagnosis"
+          className="group relative inline-flex items-center gap-4 px-16 py-7 rounded-[32px] btn-primary text-2xl font-black overflow-hidden shadow-2xl"
+        >
+          <span>今すぐ無料で診断する</span>
+          <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+        </Link>
 
-      <div className="text-slate-400 text-sm flex items-center justify-center gap-4">
-        <div className="flex items-center gap-1">
-          <MessageCircle className="w-4 h-4" />
-          <span>LINE公式アカウント提携</span>
+        <div className="flex flex-col items-center gap-4 opacity-50">
+          <div className="flex items-center gap-1 text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase">
+            <Star className="w-3 h-3 fill-current" />
+            <Star className="w-3 h-3 fill-current" />
+            <Star className="w-3 h-3 fill-current" />
+            <Star className="w-3 h-3 fill-current" />
+            <Star className="w-3 h-3 fill-current" />
+          </div>
+          <p className="text-[11px] font-bold text-slate-400 italic">
+            Trusted by over 10,000+ happy users nationwide
+          </p>
         </div>
-        <span>•</span>
-        <span>診断料 0円 (無料)</span>
       </div>
     </div>
   );
